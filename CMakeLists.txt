@@ -42,6 +42,8 @@ set(VRCRAFT_SOURCES
 )
 
 add_library(${MOD_LIBRARY_NAME} SHARED ${VRCRAFT_SOURCES})
+target_include_directories(${MOD_LIBRARY_NAME} PRIVATE "${CMAKE_BINARY_DIR}/_deps/boost_pfr-src/include")
+target_include_directories(${MOD_LIBRARY_NAME} PRIVATE "${CMAKE_BINARY_DIR}/_deps/boost_pfr-src/include")
 
 target_include_directories(${MOD_LIBRARY_NAME}
     PRIVATE
