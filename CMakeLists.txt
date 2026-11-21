@@ -16,6 +16,15 @@ set(MOD_MINECRAFT_VERSIONS "[\"1.26.66.1\"]" CACHE STRING "Target Minecraft vers
 
 include(FetchContent)
 
+# Fetch Boost.PFR (header-only, required by pl/Config.hpp)
+FetchContent_Declare(
+    boost_pfr
+    GIT_REPOSITORY https://github.com/boostorg/pfr.git
+    GIT_TAG 2.2.0
+    GIT_SHALLOW TRUE
+)
+FetchContent_MakeAvailable(boost_pfr)
+
 # Fetch magic_enum (required by pl/Config.hpp)
 FetchContent_Declare(
     magic_enum
@@ -24,6 +33,13 @@ FetchContent_Declare(
     GIT_SHALLOW TRUE
 )
 FetchContent_MakeAvailable(magic_enum)
+
+# Fetch nlohmann/json (required by pl/Config.hpp)
+FetchContent_Declare(
+    nlohmann_json
+    URL https://github.com/nlohmann/json/releases/download/v3.11.3/json.tar.xz
+)
+FetchContent_MakeAvailable(nlohmann_json)
 
 # Fetch official LeviLauncher Android Preloader SDK 0.2.2
 FetchContent_Declare(
@@ -55,6 +71,7 @@ add_library(${MOD_LIBRARY_NAME} SHARED ${VRCRAFT_SOURCES})
 target_include_directories(${MOD_LIBRARY_NAME}
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${boost_pfr_SOURCE_DIR}/include
 )
 
 target_compile_options(${MOD_LIBRARY_NAME}
@@ -65,11 +82,12 @@ target_compile_options(${MOD_LIBRARY_NAME}
         -fvisibility=hidden
 )
 
-# Link Preloader SDK + magic_enum + Android NDK Media, EGL, GLESv3, Audio & JNI libraries
+# Link Preloader SDK + dependencies + Android NDK Media, EGL, GLESv3, Audio & JNI libraries
 target_link_libraries(${MOD_LIBRARY_NAME}
     PRIVATE
         preloader
         magic_enum::magic_enum
+        nlohmann_json::nlohmann_json
         android
         log
         EGL
