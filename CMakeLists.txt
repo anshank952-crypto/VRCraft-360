@@ -41,11 +41,11 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(nlohmann_json)
 
-# Fetch official LeviLauncher Android Preloader SDK 0.2.2
+# Fetch official LeviLauncher Android Preloader SDK 0.2.3 (matches LeviLauncher 1.7.1)
 FetchContent_Declare(
     preloader_android
     GIT_REPOSITORY https://github.com/LiteLDev/preloader-android.git
-    GIT_TAG 0.2.2
+    GIT_TAG 0.2.3
     GIT_SHALLOW TRUE
 )
 FetchContent_MakeAvailable(preloader_android)
