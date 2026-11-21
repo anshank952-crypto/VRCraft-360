@@ -16,11 +16,20 @@ set(MOD_MINECRAFT_VERSIONS "[\"1.26.66.1\"]" CACHE STRING "Target Minecraft vers
 
 include(FetchContent)
 
+# Fetch magic_enum (required by pl/Config.hpp)
+FetchContent_Declare(
+    magic_enum
+    GIT_REPOSITORY https://github.com/Neargye/magic_enum.git
+    GIT_TAG v0.9.7
+    GIT_SHALLOW TRUE
+)
+FetchContent_MakeAvailable(magic_enum)
+
 # Fetch official LeviLauncher Android Preloader SDK v0.2.2
 FetchContent_Declare(
     preloader_android
     GIT_REPOSITORY https://github.com/LiteLDev/preloader-android.git
-    GIT_TAG 0.2.2
+    GIT_TAG v0.2.2
     GIT_SHALLOW TRUE
 )
 FetchContent_MakeAvailable(preloader_android)
@@ -42,8 +51,6 @@ set(VRCRAFT_SOURCES
 )
 
 add_library(${MOD_LIBRARY_NAME} SHARED ${VRCRAFT_SOURCES})
-target_include_directories(${MOD_LIBRARY_NAME} PRIVATE "${CMAKE_BINARY_DIR}/_deps/boost_pfr-src/include")
-target_include_directories(${MOD_LIBRARY_NAME} PRIVATE "${CMAKE_BINARY_DIR}/_deps/boost_pfr-src/include")
 
 target_include_directories(${MOD_LIBRARY_NAME}
     PRIVATE
@@ -58,10 +65,11 @@ target_compile_options(${MOD_LIBRARY_NAME}
         -fvisibility=hidden
 )
 
-# Link Preloader SDK + Android NDK Media, EGL, GLESv3, Audio & JNI libraries
+# Link Preloader SDK + magic_enum + Android NDK Media, EGL, GLESv3, Audio & JNI libraries
 target_link_libraries(${MOD_LIBRARY_NAME}
     PRIVATE
         preloader
+        magic_enum::magic_enum
         android
         log
         EGL
