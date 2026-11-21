@@ -1,0 +1,10 @@
+{
+  "id": "@MOD_ID@",
+  "name": "@MOD_NAME@",
+  "version": "@MOD_VERSION@",
+  "author": "@MOD_AUTHOR@",
+  "description": "Real-time 360° Mono, 360° Stereo, and VR180 Stereo gameplay recorder for Minecraft Bedrock Android.",
+  "entry": "lib@MOD_LIBRARY_NAME@.so",
+  "type": "native",
+  "minecraft_versions": @MOD_MINECRAFT_VERSIONS@
+}

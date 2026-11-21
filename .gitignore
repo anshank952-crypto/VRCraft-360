@@ -1,0 +1,7 @@
+build/
+.gradle/
+*.o
+*.so
+*.a
+*.levipack
+cmake-error.txt
